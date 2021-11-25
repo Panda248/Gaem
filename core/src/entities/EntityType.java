@@ -1,5 +1,7 @@
 package entities;
 
+import java.util.HashMap;
+
 public enum EntityType {
     PLAYER("player", 14, 32, 40);
 
@@ -28,5 +30,14 @@ public enum EntityType {
 
     public float getWeight() {
         return weight;
+    }
+
+
+    private static HashMap<String, EntityType> entityTypes;
+
+    static {
+        entityTypes = new HashMap<String, EntityType>();
+        for (EntityType type : EntityType.values())
+            entityTypes.put(type.id, type);
     }
 }
