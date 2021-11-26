@@ -9,9 +9,9 @@ import world.GameMap;
 public class Player extends Entity{
 
     private static float xSpeed, ySpeed;
-    private static float xAccel = 5;
-    private static float xMaxSpeed = 100;
-    private static float friction = 3;
+    private static float xAccel = 10;
+    private static float xMaxSpeed = 80;
+    private static float friction = 5;
     private static float airResistance = 2;
     private static final double jumpPower = 15;
 
@@ -40,17 +40,13 @@ public class Player extends Entity{
             if(grounded) {
                 xSpeed -= friction;
             }
-            else    {
-                xSpeed -= airResistance;
-            }
+            xSpeed -= airResistance;
         }
         if(xSpeed < 0) {
             if(grounded) {
                 xSpeed += friction;
             }
-            else    {
-                xSpeed += airResistance;
-            }
+            xSpeed += airResistance;
         }
 
         super.update(deltaTime, gravity);

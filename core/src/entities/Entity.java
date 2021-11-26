@@ -25,7 +25,7 @@ public abstract class Entity {
         float newY = pos.y;
 
         if (yVel > 0 || yVel < terminalVel) {
-            gravSpeed += gravity * 0.2 + gravAccel;
+            gravSpeed += gravity * 0.3 + gravAccel;
         }
 
         this.yVel += gravSpeed;
