@@ -8,8 +8,11 @@ import world.GameMap;
 
 public class Player extends Entity{
 
-    private static float xSpeed = 120, ySpeed;
-    private static float xAccel;
+    private static float xSpeed, ySpeed;
+    private static float xAccel = 5;
+    private static float xMaxSpeed = 100;
+    private static float friction = 3;
+    private static float airResistance = 2;
     private static final double jumpPower = 15;
 
     Texture image;
@@ -32,16 +35,38 @@ public class Player extends Entity{
         else if (Gdx.input.isKeyPressed(Keys.W) && !grounded && this.yVel > 0){
             this.yVel += jumpPower * getWeight() * deltaTime;
         }
+        moveX(xSpeed*deltaTime);
+        if(xSpeed > 0) {
+            if(grounded) {
+                xSpeed -= friction;
+            }
+            else    {
+                xSpeed -= airResistance;
+            }
+        }
+        if(xSpeed < 0) {
+            if(grounded) {
+                xSpeed += friction;
+            }
+            else    {
+                xSpeed += airResistance;
+            }
+        }
 
         super.update(deltaTime, gravity);
 
         if (Gdx.input.isKeyPressed(Keys.A)){
-            xSpeed -= xAccel;
-            moveX(-xSpeed * deltaTime);
-        }
-        if (Gdx.input.isKeyPressed(Keys.D)){
-            xSpeed += xAccel;
+            if(Math.abs(xSpeed) < xMaxSpeed) {
+                xSpeed -= xAccel;
+            }
             moveX(xSpeed * deltaTime);
         }
+        if (Gdx.input.isKeyPressed(Keys.D)){
+            if(Math.abs(xSpeed) < xMaxSpeed) {
+                xSpeed += xAccel;
+            }
+            moveX(xSpeed * deltaTime);
+        }
+
     }
 }

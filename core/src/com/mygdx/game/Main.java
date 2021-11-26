@@ -13,7 +13,6 @@ import world.TileType;
 import world.TiledGameMap;
 
 public class Main extends ApplicationAdapter {
-
 	SpriteBatch batch;
 	Texture img;
 
