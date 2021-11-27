@@ -10,9 +10,9 @@ public class Player extends Entity{
 
     private static float xSpeed, ySpeed;
     private static float xAccel = 10;
-    private static float xMaxSpeed = 80;
-    private static float friction = 5;
-    private static float airResistance = 2;
+    private static float xMaxSpeed = 120;
+    private static float friction = 2; // must be even
+    private static float airResistance = 2; // must be even
     private static final double jumpPower = 15;
 
     Texture image;
@@ -35,34 +35,32 @@ public class Player extends Entity{
         else if (Gdx.input.isKeyPressed(Keys.W) && !grounded && this.yVel > 0){
             this.yVel += jumpPower * getWeight() * deltaTime;
         }
-        moveX(xSpeed*deltaTime);
+
+        if (Gdx.input.isKeyPressed(Keys.A)){
+            if(Math.abs(xSpeed) < xMaxSpeed) {
+                xSpeed -= xAccel;
+            }
+        }
+        else if (Gdx.input.isKeyPressed(Keys.D)){
+            if(Math.abs(xSpeed) < xMaxSpeed) {
+                xSpeed += xAccel;
+            }
+        }
+
+        super.update(deltaTime, gravity);
+        moveX(xSpeed * deltaTime);
+
         if(xSpeed > 0) {
             if(grounded) {
                 xSpeed -= friction;
             }
             xSpeed -= airResistance;
         }
-        if(xSpeed < 0) {
+        else if(xSpeed < 0) {
             if(grounded) {
                 xSpeed += friction;
             }
             xSpeed += airResistance;
         }
-
-        super.update(deltaTime, gravity);
-
-        if (Gdx.input.isKeyPressed(Keys.A)){
-            if(Math.abs(xSpeed) < xMaxSpeed) {
-                xSpeed -= xAccel;
-            }
-            moveX(xSpeed * deltaTime);
-        }
-        if (Gdx.input.isKeyPressed(Keys.D)){
-            if(Math.abs(xSpeed) < xMaxSpeed) {
-                xSpeed += xAccel;
-            }
-            moveX(xSpeed * deltaTime);
-        }
-
     }
 }
