@@ -9,6 +9,7 @@ public abstract class Entity {
     protected EntityType type;
     protected float yVel = 0;
     protected float xVel;
+    protected float xAccel;
     private final double terminalVel = 0.1;
     private final double gravAccel = 0.01;
     protected float gravSpeed;
@@ -50,6 +51,10 @@ public abstract class Entity {
 
         if (!map.collideWithMap(newX, pos.y, getWidth(), getHeight())){
             this.pos.x = newX;
+        }
+        if (map.collideWithMap(newX, pos.y, getWidth(), getHeight())){
+            this.xVel = 0;
+            this.xAccel *= 0;
         }
     }
 

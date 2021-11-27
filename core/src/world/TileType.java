@@ -7,9 +7,7 @@ public enum TileType {
     STONE(1, true, "Stone"),
     SKY(2, false, "Sky"),
     Water(3, false, "Water"),
-    QUARTZ(4, true, "Quartz"),
-    LAVA(5, false, "Lava"),
-    Grass(6, true, "Grass");
+    Grass(4, true, "Grass");
 
     int id;
     boolean collidable;

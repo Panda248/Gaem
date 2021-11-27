@@ -8,11 +8,9 @@ import world.GameMap;
 
 public class Player extends Entity{
 
-    private static float xSpeed, ySpeed;
-    private static float xAccel = 10;
-    private static float xMaxSpeed = 120;
-    private static float friction = 2; // must be even
-    private static float airResistance = 2; // must be even
+    private static final float xMaxSpeed = 220;
+    private static final float friction = 6; // must be even
+    private static final float airResistance = 2; // must be even
     private static final double jumpPower = 15;
 
     Texture image;
@@ -29,6 +27,7 @@ public class Player extends Entity{
 
     @Override
     public void update(float deltaTime, float gravity) {
+        xAccel = 14;
         if (Gdx.input.isKeyPressed(Keys.W) && grounded){
             this.yVel += jumpPower * getWeight();
         }
@@ -37,30 +36,33 @@ public class Player extends Entity{
         }
 
         if (Gdx.input.isKeyPressed(Keys.A)){
-            if(Math.abs(xSpeed) < xMaxSpeed) {
-                xSpeed -= xAccel;
+            if(Math.abs(xVel) < xMaxSpeed) {
+                xVel -= xAccel;
             }
         }
         else if (Gdx.input.isKeyPressed(Keys.D)){
-            if(Math.abs(xSpeed) < xMaxSpeed) {
-                xSpeed += xAccel;
+            if(Math.abs(xVel) < xMaxSpeed) {
+                xVel += xAccel;
             }
+        }
+        else {
+            xVel *= 0.9;
         }
 
         super.update(deltaTime, gravity);
-        moveX(xSpeed * deltaTime);
+        moveX(xVel * deltaTime);
 
-        if(xSpeed > 0) {
+        if(xVel > 0) {
             if(grounded) {
-                xSpeed -= friction;
+                xVel -= friction;
             }
-            xSpeed -= airResistance;
+            xVel -= airResistance;
         }
-        else if(xSpeed < 0) {
+        else if(xVel < -0) {
             if(grounded) {
-                xSpeed += friction;
+                xVel += friction;
             }
-            xSpeed += airResistance;
+            xVel += airResistance;
         }
     }
 }
