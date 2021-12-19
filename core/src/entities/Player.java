@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 import world.GameMap;
 
 public class Player extends Entity{
@@ -17,6 +18,13 @@ public class Player extends Entity{
 
 
     private static final int frameCol = 24, frameRow = 1;
+
+    public enum State {FALLING, JUMPING, STANDING, RUNNING}
+    public State curState;
+    public State prevState;
+    private Animation<TextureRegion> run;
+    private Animation<TextureRegion> jump;
+
     Animation<TextureRegion> walkAnimation;
     Texture walkSheet;
     Texture image;
@@ -27,6 +35,11 @@ public class Player extends Entity{
         super(x, y, EntityType.PLAYER, map);
         createAnimation();
         image = new Texture("player.png");
+        curState = State.STANDING;
+        prevState = State.STANDING;
+        elapsedTime = 0;
+
+        Array<TextureRegion> frames = new Array<TextureRegion>();
     }
 
     private void createAnimation() {
@@ -37,10 +50,10 @@ public class Player extends Entity{
 
         TextureRegion[] walkFrames = new TextureRegion[frameCol * frameRow];
         int index = 0;
-        if (Gdx.input.isKeyPressed(Keys.W)) {
+        if (xVel == 0) {
             for (int i = 0; i < frameRow; i++) {
                 for (int j = 0; j < frameCol; j++) {
-                    walkFrames[index++] = tmp[i][j];
+                    walkFrames[index++] = tmp[0][0];
                 }
             }
         }

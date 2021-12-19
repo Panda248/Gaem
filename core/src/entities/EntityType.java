@@ -3,7 +3,8 @@ package entities;
 import java.util.HashMap;
 
 public enum EntityType {
-    PLAYER("player", 14, 32, 40);
+    PLAYER("player", 14, 32, 40),
+    ENEMYONE("enemy1", 14, 32, 40);
 
     private String id;
     private int width, height;
