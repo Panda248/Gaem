@@ -20,7 +20,7 @@ public class Enemy1 extends Entity{
 
     public Enemy1(float x, float y, GameMap map) {
         super(x, y, EntityType.ENEMYONE, map);
-        createAnimation();
+        //createAnimation();
         image = new Texture("enemy1.png");
         elapsedTime = 0;
     }
@@ -45,7 +45,7 @@ public class Enemy1 extends Entity{
 
     @Override
     public void render(SpriteBatch batch) {
-            batch.draw(curFrame, pos.x, pos.y, getWidth(), getHeight());
+            batch.draw(image, pos.x, pos.y, getWidth(), getHeight());
     }
 
     @Override
@@ -54,9 +54,5 @@ public class Enemy1 extends Entity{
 
         super.update(deltaTime, gravity);
         moveX(xVel * deltaTime);
-
-
-        elapsedTime += deltaTime;
-            curFrame = walkAnimation.getKeyFrame(elapsedTime, true);
     }
 }

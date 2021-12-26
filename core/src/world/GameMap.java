@@ -2,6 +2,7 @@ package world;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import entities.Enemy1;
 import entities.Entity;
 import entities.Player;
 
@@ -14,6 +15,7 @@ public abstract class GameMap {
     public GameMap(){
         entities = new ArrayList<Entity>(   );
         entities.add(new Player(40f, 100f, this));
+        entities.add(new Enemy1(100f, 100f, this));
     }
 
     public void render(OrthographicCamera camera, SpriteBatch batch){
@@ -55,6 +57,7 @@ public abstract class GameMap {
         }
         return false;
     }
+
 
     public abstract int getWidth();
     public abstract int getHeight();
