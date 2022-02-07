@@ -1,6 +1,7 @@
 package entities;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -77,6 +78,10 @@ public class Player extends Entity{
 
     @Override
     public void update(float deltaTime, float gravity) {
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT))
+        {
+            shoot('l');
+        }
         xAccel = 14;
         if (Gdx.input.isKeyPressed(Keys.W) && grounded){
             this.yVel += jumpPower * getWeight();
@@ -116,5 +121,10 @@ public class Player extends Entity{
         }
         elapsedTime += deltaTime;
             curFrame = walkAnimation.getKeyFrame(elapsedTime, true);
+    }
+
+    public void shoot(char type)
+    {
+        new Portal(Gdx.input.getX(), Gdx.input.getY(), this.map, new Texture((Gdx.files.internal("portal1.png"))));
     }
 }
