@@ -22,6 +22,12 @@ public abstract class Entity {
         this.map = map;
     }
 
+    /*public boolean collidesWithEntity(float x, float y, int width, int height){
+        if (){
+
+        }
+    }*/
+
     public void update(float deltaTime, float gravity){
         float newY = pos.y;
 
