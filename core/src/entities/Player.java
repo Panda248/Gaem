@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import world.GameMap;
 
+import java.util.ArrayList;
+
 public class Player extends Entity{
 
     private static final float xMaxSpeed = 220;
@@ -25,6 +27,7 @@ public class Player extends Entity{
     public State prevState;
     private Animation<TextureRegion> run;
     private Animation<TextureRegion> jump;
+    private Portal[] portals;
 
     Animation<TextureRegion> walkAnimation;
     Texture walkSheet;
@@ -39,7 +42,7 @@ public class Player extends Entity{
         curState = State.STANDING;
         prevState = State.STANDING;
         elapsedTime = 0;
-
+        portals = new Portal[2];
         Array<TextureRegion> frames = new Array<TextureRegion>();
     }
 
@@ -74,15 +77,25 @@ public class Player extends Entity{
     @Override
     public void render(SpriteBatch batch) {
             batch.draw(curFrame, pos.x, pos.y, getWidth(), getHeight());
+            if(portals[0] != null)  {
+                portals[0].render(batch);
+            }
+            if(portals[1] != null)  {
+                portals[1].render(batch);
+            }
     }
 
     @Override
     public void update(float deltaTime, float gravity) {
+        xAccel = 14;
         if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT))
         {
             shoot('l');
         }
-        xAccel = 14;
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT))
+        {
+            shoot('r');
+        }
         if (Gdx.input.isKeyPressed(Keys.W) && grounded){
             this.yVel += jumpPower * getWeight();
         }
@@ -103,7 +116,7 @@ public class Player extends Entity{
         else {
             xVel *= 0.9;
         }
-
+        teleport();
         super.update(deltaTime, gravity);
         moveX(xVel * deltaTime);
 
@@ -125,6 +138,25 @@ public class Player extends Entity{
 
     public void shoot(char type)
     {
-        new Portal(Gdx.input.getX(), Gdx.input.getY(), this.map, new Texture((Gdx.files.internal("portal1.png"))));
+        if(type == 'l') {
+            portals[0] = new Portal(Gdx.input.getX() - getWidth()/2, Gdx.input.getY() + getHeight()/2, this.map, new Texture((Gdx.files.internal("portal1.png"))));
+            System.out.println(portals[0].getX() + ", " + portals[0].getY());
+        }
+        else if(type == 'r')
+        {
+            portals[1] = new Portal(Gdx.input.getX() - getWidth()/2, Gdx.input.getY() + getHeight()/2, this.map, new Texture((Gdx.files.internal("portal2.png"))));
+        }
+
+    }
+    private void teleport()
+    {
+        if(portals[0] != null && portals[1] != null)
+        {
+            if((this.getX() + this.getWidth() > portals[0].getPos().x && this.getX() < portals[0].getWidth() + portals[0].getPos().x) &&
+                    (this.getY() + this.getHeight() > portals[0].getPos().y && this.getY() < portals[0].getHeight() + portals[0].getPos().y)) {
+                this.pos.x = portals[1].getX();
+                this.pos.y = portals[1].getY();
+            }
+        }
     }
 }

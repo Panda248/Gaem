@@ -1,5 +1,6 @@
 package entities;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -13,6 +14,15 @@ public class Portal extends Entity{
 
     public Portal(float x, float y, GameMap map, Texture img) {
         super(x,y,EntityType.PORTAL,map);
+        if(y > map.getPixelHeight()/2)
+        {
+            this.getPos().y = map.getPixelHeight()/2 - (this.getPos().y - map.getPixelHeight()/2);
+        }
+        if(y < map.getPixelHeight()/2)
+        {
+            this.getPos().y = map.getPixelHeight()/2 + (-this.getPos().y + map.getPixelHeight()/2);
+        }
+
         this.sprite = img;
     }
 
