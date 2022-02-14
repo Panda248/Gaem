@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public abstract class GameMap {
 
-    protected ArrayList<Entity> entities;
+    public ArrayList<Entity> entities;
 
     public GameMap(){
         entities = new ArrayList<Entity>(   );
