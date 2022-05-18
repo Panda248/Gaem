@@ -21,6 +21,11 @@ public abstract class Entity {
         this.type = type;
         this.map = map;
     }
+    public boolean collidesWithEntity(float x, float y, int width, int height){
+        for (Entity i : map.entities){
+            if (i.getWidth() &&)
+        }
+    }
 
     public void update(float deltaTime, float gravity){
         float newY = pos.y;

@@ -4,7 +4,9 @@ import java.util.HashMap;
 
 public enum EntityType {
     PLAYER("player", 14, 32, 40),
-    ENEMYONE("enemy1", 14, 32, 40);
+    ENEMYONE("enemy1", 14, 32, 40),
+    PORTAL("portal", 14, 34, 0);
+
 
     private String id;
     private int width, height;

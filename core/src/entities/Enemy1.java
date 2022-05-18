@@ -23,6 +23,7 @@ public class Enemy1 extends Entity{
         //createAnimation();
         image = new Texture("enemy1.png");
         elapsedTime = 0;
+        xVel = -100;
     }
 
     private void createAnimation() {
@@ -48,10 +49,21 @@ public class Enemy1 extends Entity{
             batch.draw(image, pos.x, pos.y, getWidth(), getHeight());
     }
 
+    protected void moveX(float shift){
+        float newX = pos.x + shift;
+
+        if (!map.collideWithMap(newX, pos.y, getWidth(), getHeight())){
+            this.pos.x = newX;
+        }
+        if (map.collideWithMap(newX, pos.y, getWidth(), getHeight())){
+            this.xVel *= -1;
+            this.xAccel *= -1;
+        }
+    }
+
+
     @Override
-    public void update(float deltaTime, float gravity) {
-
-
+    public void update(float deltaTime, float gravity){
         super.update(deltaTime, gravity);
         moveX(xVel * deltaTime);
     }
